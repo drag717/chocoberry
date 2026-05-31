@@ -1,5 +1,20 @@
 [
   {
+    "id": "подарочные-коробки",
+    "name": "Подарочные коробки",
+    "category": "Фруктовые боксы",
+    "price": 1500,
+    "size": "M",
+    "composition": "Клубника, банан, гранат, шоколад",
+    "description": ".",
+    "image": "",
+    "tags": [
+      "Фруктовые боксы"
+    ],
+    "popular": false,
+    "images": []
+  },
+  {
     "id": "berry-rose-premium",
     "name": "Berry Rose Premium",
     "category": "Букеты из клубники",
@@ -8,8 +23,18 @@
     "composition": "Клубника, бельгийский шоколад, розы, фисташка, дизайнерская упаковка",
     "description": "Романтичный букет для свидания, годовщины или эффектного сюрприза.",
     "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Chocolate-dipped%20strawberries%20for%20Mother%27s%20Day%20at%20Wegmans.jpg",
-    "tags": ["Девушке ❤️", "Жене 💍", "Годовщина 💍", "Свидание 🌹", "Красота и оформление ✨", "Премиум подарок 👑"],
-    "popular": true
+    "tags": [
+      "Девушке ❤️",
+      "Жене 💍",
+      "Годовщина 💍",
+      "Свидание 🌹",
+      "Красота и оформление ✨",
+      "Премиум подарок 👑"
+    ],
+    "popular": true,
+    "images": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Chocolate-dipped%20strawberries%20for%20Mother%27s%20Day%20at%20Wegmans.jpg"
+    ]
   },
   {
     "id": "choco-heart-box",
@@ -20,8 +45,18 @@
     "composition": "Свежая клубника, темный и молочный шоколад, сублимированная малина, золото",
     "description": "Нежный набор в сердце: выглядит дорого и всегда попадает в настроение.",
     "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Chocolate%20covered%20strawberries.jpg",
-    "tags": ["Девушке ❤️", "Подруге 🎀", "Без повода ❤️", "Извинение 🙏", "Красота и оформление ✨", "Много клубники 🍓"],
-    "popular": true
+    "tags": [
+      "Девушке ❤️",
+      "Подруге 🎀",
+      "Без повода ❤️",
+      "Извинение 🙏",
+      "Красота и оформление ✨",
+      "Много клубники 🍓"
+    ],
+    "popular": true,
+    "images": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Chocolate%20covered%20strawberries.jpg"
+    ]
   },
   {
     "id": "mama-garden",
@@ -32,8 +67,17 @@
     "composition": "Клубника, виноград, голубика, сыр бри, орехи, цветы",
     "description": "Теплый подарочный бокс для мамы, сестры или семейного праздника.",
     "image": "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=900&q=85",
-    "tags": ["Маме 🌷", "Сестре 🎁", "День рождения 🎂", "Сюрприз 🎁", "Большой размер 📦"],
-    "popular": true
+    "tags": [
+      "Маме 🌷",
+      "Сестре 🎁",
+      "День рождения 🎂",
+      "Сюрприз 🎁",
+      "Большой размер 📦"
+    ],
+    "popular": true,
+    "images": [
+      "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=900&q=85"
+    ]
   },
   {
     "id": "first-date-mini",
@@ -44,8 +88,17 @@
     "composition": "Клубника, шоколад, мини-розы, крафтовая упаковка",
     "description": "Аккуратный знак внимания, когда хочется приятно удивить без лишней торжественности.",
     "image": "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=900&q=85",
-    "tags": ["Девушке ❤️", "Коллеге 🎉", "Без повода ❤️", "Свидание 🌹", "До 1500 ₽"],
-    "popular": false
+    "tags": [
+      "Девушке ❤️",
+      "Коллеге 🎉",
+      "Без повода ❤️",
+      "Свидание 🌹",
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": [
+      "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=900&q=85"
+    ]
   },
   {
     "id": "royal-signature",
@@ -56,8 +109,18 @@
     "composition": "Клубника, розы, пионовидные розы, шоколад, декор, премиальная коробка",
     "description": "Большой вау-подарок, который выглядит как главная сцена праздника.",
     "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Valentine%20strawberry%20%2812618498574%29.jpg",
-    "tags": ["Жене 💍", "Маме 🌷", "Годовщина 💍", "День рождения 🎂", "Премиум подарок 👑", "Большой размер 📦"],
-    "popular": true
+    "tags": [
+      "Жене 💍",
+      "Маме 🌷",
+      "Годовщина 💍",
+      "День рождения 🎂",
+      "Премиум подарок 👑",
+      "Большой размер 📦"
+    ],
+    "popular": true,
+    "images": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Valentine%20strawberry%20%2812618498574%29.jpg"
+    ]
   },
   {
     "id": "hong-kong-waffle-nutella",
@@ -68,8 +131,15 @@
     "composition": "Гонконгская вафля, Nutella, ягоды, топпинг",
     "description": "Теплая вафля с шоколадно-ореховой начинкой.",
     "image": "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=900&q=85",
-    "tags": ["Без повода ❤️", "Сюрприз 🎁", "До 1500 ₽"],
-    "popular": true
+    "tags": [
+      "Без повода ❤️",
+      "Сюрприз 🎁",
+      "До 1500 ₽"
+    ],
+    "popular": true,
+    "images": [
+      "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=900&q=85"
+    ]
   },
   {
     "id": "hong-kong-waffle-two-fillings",
@@ -79,9 +149,14 @@
     "size": "1 порция",
     "composition": "Гонконгская вафля, две начинки на выбор, ягоды, соус",
     "description": "Сытный десерт, где можно выбрать сразу два вкуса.",
-    "image": "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=900&q=85",
-    "tags": ["Подруге 🎀", "Коллеге 🎉", "До 1500 ₽"],
-    "popular": false
+    "image": "",
+    "tags": [
+      "Подруге 🎀",
+      "Коллеге 🎉",
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": []
   },
   {
     "id": "hong-kong-waffle-belgian-chocolate",
@@ -92,8 +167,15 @@
     "composition": "Гонконгская вафля, бельгийский шоколад, ягоды",
     "description": "Шоколадная вафля для тех, кто выбирает насыщенный вкус.",
     "image": "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=900&q=85",
-    "tags": ["Девушке ❤️", "Свидание 🌹", "До 1500 ₽"],
-    "popular": false
+    "tags": [
+      "Девушке ❤️",
+      "Свидание 🌹",
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": [
+      "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=900&q=85"
+    ]
   },
   {
     "id": "choco-balls-ice-cream",
@@ -104,8 +186,14 @@
     "composition": "Чоко шарики, мороженое, шоколадный топпинг",
     "description": "Хрустящий шоколадный десерт с мороженым.",
     "image": "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=900&q=85",
-    "tags": ["Сюрприз 🎁", "До 1500 ₽"],
-    "popular": false
+    "tags": [
+      "Сюрприз 🎁",
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": [
+      "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=900&q=85"
+    ]
   },
   {
     "id": "choco-balls",
@@ -116,8 +204,13 @@
     "composition": "Чоко шарики, шоколадный топпинг",
     "description": "Легкая шоколадная версия без мороженого.",
     "image": "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=900&q=85",
-    "tags": ["До 1500 ₽"],
-    "popular": false
+    "tags": [
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": [
+      "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=900&q=85"
+    ]
   },
   {
     "id": "fruit-boko-small",
@@ -128,8 +221,15 @@
     "composition": "Фрукты, ягоды, шоколадный соус",
     "description": "Небольшой фруктовый набор для перекуса или комплимента.",
     "image": "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=900&q=85",
-    "tags": ["Подруге 🎀", "Коллеге 🎉", "До 1500 ₽"],
-    "popular": false
+    "tags": [
+      "Подруге 🎀",
+      "Коллеге 🎉",
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": [
+      "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=900&q=85"
+    ]
   },
   {
     "id": "fruit-boko-large",
@@ -140,8 +240,14 @@
     "composition": "Фрукты, ягоды, шоколадный соус",
     "description": "Увеличенная порция фруктового набора.",
     "image": "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=900&q=85",
-    "tags": ["Большой размер 📦", "До 1500 ₽"],
-    "popular": false
+    "tags": [
+      "Большой размер 📦",
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": [
+      "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=900&q=85"
+    ]
   },
   {
     "id": "fruit-box-menu",
@@ -151,9 +257,15 @@
     "size": "Подарочный бокс",
     "composition": "Ассорти фруктов, ягоды, соусы",
     "description": "Подарочный фруктовый бокс из меню ChocoBerry.",
-    "image": "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=900&q=85",
-    "tags": ["Маме 🌷", "Сестре 🎁", "День рождения 🎂", "Сюрприз 🎁"],
-    "popular": true
+    "image": "",
+    "tags": [
+      "Маме 🌷",
+      "Сестре 🎁",
+      "День рождения 🎂",
+      "Сюрприз 🎁"
+    ],
+    "popular": true,
+    "images": []
   },
   {
     "id": "choco-boko",
@@ -164,8 +276,14 @@
     "composition": "Клубника, шоколад, топпинг",
     "description": "Порция ягод с шоколадом в фирменной подаче.",
     "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Chocolate%20covered%20strawberries.jpg",
-    "tags": ["Много клубники 🍓", "До 1500 ₽"],
-    "popular": false
+    "tags": [
+      "Много клубники 🍓",
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Chocolate%20covered%20strawberries.jpg"
+    ]
   },
   {
     "id": "fruit-salad",
@@ -176,8 +294,13 @@
     "composition": "Свежие фрукты и ягоды",
     "description": "Свежий фруктовый салат на каждый день.",
     "image": "https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?auto=format&fit=crop&w=900&q=85",
-    "tags": ["До 1500 ₽"],
-    "popular": false
+    "tags": [
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": [
+      "https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?auto=format&fit=crop&w=900&q=85"
+    ]
   },
   {
     "id": "sweet-rolls",
@@ -188,8 +311,14 @@
     "composition": "Сладкие роллы, фрукты, шоколадный соус",
     "description": "Десертные роллы с фруктами и соусом.",
     "image": "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=900&q=85",
-    "tags": ["До 1500 ₽", "Сюрприз 🎁"],
-    "popular": false
+    "tags": [
+      "До 1500 ₽",
+      "Сюрприз 🎁"
+    ],
+    "popular": false,
+    "images": [
+      "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=900&q=85"
+    ]
   },
   {
     "id": "waffle-ice-cream-nutella-berries",
@@ -200,8 +329,16 @@
     "composition": "Вафля, мороженое, Nutella, ягоды",
     "description": "Яркая десертная вафля с мороженым и ягодами.",
     "image": "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=900&q=85",
-    "tags": ["Девушке ❤️", "Свидание 🌹", "Красота и оформление ✨", "До 1500 ₽"],
-    "popular": true
+    "tags": [
+      "Девушке ❤️",
+      "Свидание 🌹",
+      "Красота и оформление ✨",
+      "До 1500 ₽"
+    ],
+    "popular": true,
+    "images": [
+      "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=900&q=85"
+    ]
   },
   {
     "id": "fruit-cup-belgian-chocolate",
@@ -212,8 +349,14 @@
     "composition": "Фрукты, ягоды, бельгийский шоколад",
     "description": "Фруктовый стаканчик с шоколадной заливкой.",
     "image": "https://commons.wikimedia.org/wiki/Special:FilePath/020260501%20Chocolate-covered%20strawberries.jpg",
-    "tags": ["Много клубники 🍓", "До 1500 ₽"],
-    "popular": false
+    "tags": [
+      "Много клубники 🍓",
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/020260501%20Chocolate-covered%20strawberries.jpg"
+    ]
   },
   {
     "id": "strawberry-chocolate-cup-small",
@@ -224,8 +367,15 @@
     "composition": "Клубника, бельгийский шоколад, стакан",
     "description": "Фирменная клубника в шоколаде в стакане.",
     "image": "https://commons.wikimedia.org/wiki/Special:FilePath/020260501%20Chocolate-covered%20strawberries.jpg",
-    "tags": ["Девушке ❤️", "Много клубники 🍓", "До 1500 ₽"],
-    "popular": true
+    "tags": [
+      "Девушке ❤️",
+      "Много клубники 🍓",
+      "До 1500 ₽"
+    ],
+    "popular": true,
+    "images": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/020260501%20Chocolate-covered%20strawberries.jpg"
+    ]
   },
   {
     "id": "strawberry-chocolate-cup-large",
@@ -236,8 +386,15 @@
     "composition": "Клубника, бельгийский шоколад, большой стакан",
     "description": "Большой стакан клубники в шоколаде.",
     "image": "https://commons.wikimedia.org/wiki/Special:FilePath/020260501%20Chocolate-covered%20strawberries.jpg",
-    "tags": ["Много клубники 🍓", "Большой размер 📦", "До 1500 ₽"],
-    "popular": false
+    "tags": [
+      "Много клубники 🍓",
+      "Большой размер 📦",
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/020260501%20Chocolate-covered%20strawberries.jpg"
+    ]
   },
   {
     "id": "ice-urbech",
@@ -247,9 +404,12 @@
     "size": "1 стакан",
     "composition": "Холодный напиток на основе урбеча",
     "description": "Охлаждающий фирменный напиток.",
-    "image": "https://images.unsplash.com/photo-1522992319-0365e5f11656?auto=format&fit=crop&w=900&q=85",
-    "tags": ["До 1500 ₽"],
-    "popular": false
+    "image": "",
+    "tags": [
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": []
   },
   {
     "id": "milkshake",
@@ -260,8 +420,13 @@
     "composition": "Молочный коктейль, ванильный вкус",
     "description": "Классический молочный коктейль.",
     "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=900&q=85",
-    "tags": ["До 1500 ₽"],
-    "popular": false
+    "tags": [
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": [
+      "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=900&q=85"
+    ]
   },
   {
     "id": "tonic",
@@ -272,8 +437,13 @@
     "composition": "Адреналин, арбуз, травяной вкус",
     "description": "Освежающий тоник из меню ChocoBerry.",
     "image": "https://images.unsplash.com/photo-1621263764928-df1444c5e859?auto=format&fit=crop&w=900&q=85",
-    "tags": ["До 1500 ₽"],
-    "popular": false
+    "tags": [
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": [
+      "https://images.unsplash.com/photo-1621263764928-df1444c5e859?auto=format&fit=crop&w=900&q=85"
+    ]
   },
   {
     "id": "mojito",
@@ -284,8 +454,13 @@
     "composition": "Клубничный, личи, голубая лагуна, малина-маракуйя, ананасовый, классический",
     "description": "Линейка освежающих мохито.",
     "image": "https://images.unsplash.com/photo-1621263764928-df1444c5e859?auto=format&fit=crop&w=900&q=85",
-    "tags": ["До 1500 ₽"],
-    "popular": false
+    "tags": [
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": [
+      "https://images.unsplash.com/photo-1621263764928-df1444c5e859?auto=format&fit=crop&w=900&q=85"
+    ]
   },
   {
     "id": "strawberry-in-chocolate-piece",
@@ -296,8 +471,14 @@
     "composition": "Клубника, шоколад",
     "description": "Классическая клубника в шоколаде поштучно.",
     "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Chocolate%20covered%20strawberries.jpg",
-    "tags": ["Много клубники 🍓", "До 1500 ₽"],
-    "popular": false
+    "tags": [
+      "Много клубники 🍓",
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Chocolate%20covered%20strawberries.jpg"
+    ]
   },
   {
     "id": "banana-in-chocolate",
@@ -308,8 +489,13 @@
     "composition": "Банан, шоколад",
     "description": "Банан в шоколадной глазури.",
     "image": "https://images.unsplash.com/photo-1526364163643-89e30b8fcb70?auto=format&fit=crop&w=900&q=85",
-    "tags": ["До 1500 ₽"],
-    "popular": false
+    "tags": [
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": [
+      "https://images.unsplash.com/photo-1526364163643-89e30b8fcb70?auto=format&fit=crop&w=900&q=85"
+    ]
   },
   {
     "id": "pomegranate-in-chocolate",
@@ -320,8 +506,13 @@
     "composition": "Гранат, шоколад",
     "description": "Гранатовые зерна в шоколаде.",
     "image": "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=900&q=85",
-    "tags": ["До 1500 ₽"],
-    "popular": false
+    "tags": [
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": [
+      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=900&q=85"
+    ]
   },
   {
     "id": "croissant",
@@ -329,11 +520,14 @@
     "category": "Десерты",
     "price": 350,
     "size": "1 шт.",
-    "composition": "Слоеное тесто, начинка",
+    "composition": "Внутри банан, клубника и Нутелла",
     "description": "Свежий круассан из меню ChocoBerry.",
-    "image": "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=900&q=85",
-    "tags": ["До 1500 ₽"],
-    "popular": false
+    "image": "",
+    "tags": [
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": []
   },
   {
     "id": "trifle-small",
@@ -343,9 +537,12 @@
     "size": "S",
     "composition": "Бисквит, крем, ягоды",
     "description": "Небольшой трайфл в стаканчике.",
-    "image": "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=900&q=85",
-    "tags": ["До 1500 ₽"],
-    "popular": false
+    "image": "",
+    "tags": [
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": []
   },
   {
     "id": "trifle-large",
@@ -356,8 +553,13 @@
     "composition": "Бисквит, крем, ягоды",
     "description": "Большой трайфл в стаканчике.",
     "image": "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=900&q=85",
-    "tags": ["До 1500 ₽"],
-    "popular": false
+    "tags": [
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": [
+      "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=900&q=85"
+    ]
   },
   {
     "id": "caramel-pie",
@@ -368,8 +570,13 @@
     "composition": "Песочная основа, карамель, крем",
     "description": "Нежный пирог с карамельной начинкой.",
     "image": "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=900&q=85",
-    "tags": ["До 1500 ₽"],
-    "popular": false
+    "tags": [
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": [
+      "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=900&q=85"
+    ]
   },
   {
     "id": "san-sebastian-cheesecake",
@@ -380,8 +587,13 @@
     "composition": "Сырный крем, сливки, карамелизированная корочка",
     "description": "Кремовый чизкейк Сан Себастьян.",
     "image": "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=900&q=85",
-    "tags": ["До 1500 ₽"],
-    "popular": false
+    "tags": [
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": [
+      "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=900&q=85"
+    ]
   },
   {
     "id": "milka-cake",
@@ -392,8 +604,13 @@
     "composition": "Шоколадный бисквит, крем, молочный шоколад",
     "description": "Пирожное с мягким шоколадным вкусом.",
     "image": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=85",
-    "tags": ["До 1500 ₽"],
-    "popular": false
+    "tags": [
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": [
+      "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=85"
+    ]
   },
   {
     "id": "raspberry-tart",
@@ -404,8 +621,13 @@
     "composition": "Песочная основа, крем, малина",
     "description": "Аккуратный тарт с малиновой начинкой.",
     "image": "https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?auto=format&fit=crop&w=900&q=85",
-    "tags": ["До 1500 ₽"],
-    "popular": false
+    "tags": [
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": [
+      "https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?auto=format&fit=crop&w=900&q=85"
+    ]
   },
   {
     "id": "potato-cake-in-chocolate",
@@ -416,8 +638,13 @@
     "composition": "Пирожное картошка, шоколадная глазурь",
     "description": "Классическая картошка в шоколаде.",
     "image": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=85",
-    "tags": ["До 1500 ₽"],
-    "popular": false
+    "tags": [
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": [
+      "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=85"
+    ]
   },
   {
     "id": "eclair",
@@ -427,9 +654,12 @@
     "size": "1 шт.",
     "composition": "Заварное тесто, крем, глазурь",
     "description": "Классический эклер с кремом.",
-    "image": "https://images.unsplash.com/photo-1621236378699-8597faf6a176?auto=format&fit=crop&w=900&q=85",
-    "tags": ["До 1500 ₽"],
-    "popular": false
+    "image": "",
+    "tags": [
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": []
   },
   {
     "id": "tiramisu",
@@ -439,21 +669,27 @@
     "size": "1 порция",
     "composition": "Савоярди, кофейная пропитка, крем",
     "description": "Кофейный десерт в нежном креме.",
-    "image": "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=900&q=85",
-    "tags": ["До 1500 ₽"],
-    "popular": false
+    "image": "",
+    "tags": [
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": []
   },
   {
     "id": "pancake-envelope",
     "name": "Блинный конверт",
     "category": "Десерты",
-    "price": 300,
+    "price": 299,
     "size": "1 порция",
     "composition": "Блин, сладкая начинка, топпинг",
     "description": "Сладкий блинный конверт с начинкой.",
-    "image": "https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=900&q=85",
-    "tags": ["До 1500 ₽"],
-    "popular": false
+    "image": "",
+    "tags": [
+      "До 1500 ₽"
+    ],
+    "popular": false,
+    "images": []
   },
   {
     "id": "dubai-cup",
@@ -463,8 +699,14 @@
     "size": "1 стаканчик",
     "composition": "Шоколад, крем, хрустящая начинка, фисташковая нота",
     "description": "Трендовый десерт в стаканчике с насыщенным вкусом.",
-    "image": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=85",
-    "tags": ["Девушке ❤️", "Сюрприз 🎁", "Красота и оформление ✨", "До 1500 ₽"],
-    "popular": true
+    "image": "",
+    "tags": [
+      "Девушке ❤️",
+      "Сюрприз 🎁",
+      "Красота и оформление ✨",
+      "До 1500 ₽"
+    ],
+    "popular": true,
+    "images": []
   }
 ]

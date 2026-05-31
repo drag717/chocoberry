@@ -2,15 +2,28 @@ import { createServer } from 'node:http';
 import { readFile, writeFile, mkdir, stat } from 'node:fs/promises';
 import { createReadStream } from 'node:fs';
 import { extname, join, normalize, resolve } from 'node:path';
-import { randomUUID } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 
 const root = resolve(process.cwd());
 const distDir = join(root, 'dist');
 const dataDir = join(root, 'server', 'data');
-const uploadsDir = join(root, 'public', 'uploads');
 const port = Number(process.env.PORT || 8080);
 const adminPassword = process.env.ADMIN_PASSWORD || 'choco9380';
 const tokens = new Set();
+
+const cloudinary = {
+  cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+  apiKey: process.env.CLOUDINARY_API_KEY,
+  apiSecret: process.env.CLOUDINARY_API_SECRET,
+  folder: process.env.CLOUDINARY_FOLDER || 'chocoberry',
+};
+
+const githubStore = {
+  token: process.env.GITHUB_TOKEN,
+  repo: process.env.GITHUB_REPO,
+  branch: process.env.GITHUB_BRANCH || 'main',
+  prefix: process.env.GITHUB_DATA_PREFIX || 'server-data',
+};
 
 const seeds = {
   products: join(root, 'src', 'data', 'products.json'),
@@ -40,14 +53,23 @@ const types = {
 };
 
 await mkdir(dataDir, { recursive: true });
-await mkdir(uploadsDir, { recursive: true });
-await Promise.all(Object.keys(files).map(ensureDataFile));
+for (const key of Object.keys(files)) {
+  await ensureDataFile(key);
+}
 
 async function ensureDataFile(key) {
+  const remote = await readGithubData(key);
+  if (remote !== null) {
+    await writeJson(files[key], remote);
+    return;
+  }
+
   try {
     await stat(files[key]);
   } catch {
-    await writeFile(files[key], await readFile(seeds[key], 'utf8'), 'utf8');
+    const seed = JSON.parse(await readFile(seeds[key], 'utf8'));
+    await writeJson(files[key], seed);
+    await writeGithubData(key, seed, `Initialize ChocoBerry ${key} data`);
   }
 }
 
@@ -57,6 +79,11 @@ async function readJson(file) {
 
 async function writeJson(file, value) {
   await writeFile(file, JSON.stringify(value, null, 2), 'utf8');
+}
+
+async function writeData(key, value) {
+  await writeJson(files[key], value);
+  await writeGithubData(key, value, `Update ChocoBerry ${key} data`);
 }
 
 async function bodyJson(req) {
@@ -83,10 +110,6 @@ function requireAuth(req, res) {
   return false;
 }
 
-function cleanUploadName(name) {
-  return name.toLowerCase().replace(/[^a-z0-9.]+/g, '-').replace(/^-|-$/g, '') || 'photo.jpg';
-}
-
 async function api(req, res, url) {
   if (req.method === 'GET' && url.pathname === '/api/data') {
     sendJson(res, 200, {
@@ -111,15 +134,15 @@ async function api(req, res, url) {
   }
 
   const writable = {
-    '/api/products': files.products,
-    '/api/reviews': files.reviews,
-    '/api/gallery': files.gallery,
-    '/api/contacts': files.contacts,
+    '/api/products': 'products',
+    '/api/reviews': 'reviews',
+    '/api/gallery': 'gallery',
+    '/api/contacts': 'contacts',
   };
 
   if (req.method === 'PUT' && writable[url.pathname]) {
     if (!requireAuth(req, res)) return true;
-    await writeJson(writable[url.pathname], await bodyJson(req));
+    await writeData(writable[url.pathname], await bodyJson(req));
     sendJson(res, 200, { ok: true });
     return true;
   }
@@ -131,16 +154,12 @@ async function api(req, res, url) {
       sendJson(res, 400, { error: 'dataUrl is required' });
       return true;
     }
-    const match = body.dataUrl.match(/^data:(.+);base64,(.+)$/);
-    if (!match) {
+    if (!/^data:image\/[a-zA-Z0-9.+-]+;base64,/.test(body.dataUrl)) {
       sendJson(res, 400, { error: 'Invalid dataUrl' });
       return true;
     }
-    const ext = extname(cleanUploadName(body.fileName || 'photo.jpg')) || mimeExt(match[1]);
-    const fileName = `${Date.now()}-${randomUUID()}${ext}`;
-    const target = join(uploadsDir, fileName);
-    await writeFile(target, Buffer.from(match[2], 'base64'));
-    sendJson(res, 200, { url: `/uploads/${fileName}` });
+    const uploaded = await uploadToCloudinary(body.dataUrl);
+    sendJson(res, 200, { url: uploaded.secure_url });
     return true;
   }
 
@@ -152,15 +171,95 @@ function publicContacts(value) {
   return safe;
 }
 
-function mimeExt(mime) {
-  if (mime.includes('png')) return '.png';
-  if (mime.includes('webp')) return '.webp';
-  return '.jpg';
+function cloudinaryReady() {
+  return Boolean(cloudinary.cloudName && cloudinary.apiKey && cloudinary.apiSecret);
+}
+
+function githubReady() {
+  return Boolean(githubStore.token && githubStore.repo);
+}
+
+function githubHeaders() {
+  return {
+    authorization: `Bearer ${githubStore.token}`,
+    accept: 'application/vnd.github+json',
+    'content-type': 'application/json',
+    'x-github-api-version': '2022-11-28',
+  };
+}
+
+function githubDataPath(key) {
+  return `${githubStore.prefix}/${key}.json`;
+}
+
+async function githubContent(key) {
+  if (!githubReady()) return null;
+  const path = githubDataPath(key);
+  const response = await fetch(
+    `https://api.github.com/repos/${githubStore.repo}/contents/${encodeURIComponent(path).replace(/%2F/g, '/')}?ref=${encodeURIComponent(githubStore.branch)}`,
+    { headers: githubHeaders() },
+  );
+  if (response.status === 404) return null;
+  if (!response.ok) throw new Error(`GitHub read failed: ${response.status} ${await response.text()}`);
+  return response.json();
+}
+
+async function readGithubData(key) {
+  const content = await githubContent(key);
+  if (!content?.content) return null;
+  return JSON.parse(Buffer.from(content.content, 'base64').toString('utf8'));
+}
+
+async function writeGithubData(key, value, message) {
+  if (!githubReady()) return;
+  const existing = await githubContent(key);
+  const body = {
+    message,
+    branch: githubStore.branch,
+    content: Buffer.from(JSON.stringify(value, null, 2), 'utf8').toString('base64'),
+    ...(existing?.sha ? { sha: existing.sha } : {}),
+  };
+  const path = githubDataPath(key);
+  const response = await fetch(
+    `https://api.github.com/repos/${githubStore.repo}/contents/${encodeURIComponent(path).replace(/%2F/g, '/')}`,
+    { method: 'PUT', headers: githubHeaders(), body: JSON.stringify(body) },
+  );
+  if (!response.ok) throw new Error(`GitHub write failed: ${response.status} ${await response.text()}`);
+}
+
+function cloudinarySignature(params) {
+  const payload = Object.keys(params)
+    .sort()
+    .map((key) => `${key}=${params[key]}`)
+    .join('&');
+  return createHash('sha1').update(`${payload}${cloudinary.apiSecret}`).digest('hex');
+}
+
+async function uploadToCloudinary(dataUrl) {
+  if (!cloudinaryReady()) {
+    throw new Error('Cloudinary env vars are not configured');
+  }
+
+  const timestamp = Math.round(Date.now() / 1000);
+  const params = { folder: cloudinary.folder, timestamp };
+  const form = new FormData();
+  form.set('file', dataUrl);
+  form.set('api_key', cloudinary.apiKey);
+  form.set('timestamp', String(timestamp));
+  form.set('folder', cloudinary.folder);
+  form.set('signature', cloudinarySignature(params));
+
+  const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudinary.cloudName}/image/upload`, {
+    method: 'POST',
+    body: form,
+  });
+  if (!response.ok) throw new Error(`Cloudinary upload failed: ${response.status} ${await response.text()}`);
+  return response.json();
 }
 
 async function staticFile(req, res, url) {
   const requestPath = decodeURIComponent(url.pathname === '/' ? '/index.html' : url.pathname);
-  const baseDir = requestPath.startsWith('/uploads/') ? join(root, 'public') : distDir;
+  const baseDir = distDir;
   const target = normalize(join(baseDir, requestPath));
   if (!target.startsWith(baseDir)) {
     res.writeHead(403);

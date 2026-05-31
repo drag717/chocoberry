@@ -40,12 +40,15 @@ type Review = {
   role: string;
   text: string;
   rating: number;
+  image?: string;
+  images?: string[];
 };
 
 type GalleryItem = {
   id: string;
   title: string;
   image: string;
+  images?: string[];
   height: 'short' | 'medium' | 'tall';
 };
 
@@ -104,6 +107,7 @@ const emptyProduct: Product = {
   composition: '',
   description: '',
   image: '',
+  images: [],
   tags: [],
   popular: false,
 };
@@ -114,12 +118,15 @@ const emptyReview: Review = {
   role: '',
   text: '',
   rating: 5,
+  image: '',
+  images: [],
 };
 
 const emptyGalleryItem: GalleryItem = {
   id: '',
   title: '',
   image: '',
+  images: [],
   height: 'medium',
 };
 
@@ -156,15 +163,16 @@ async function saveServerData(path: string, value: unknown) {
 
 async function uploadImage(file: File) {
   const dataUrl = await fileToDataUrl(file);
-  try {
-    const result = await apiRequest<{ url: string }>('/api/upload', {
-      method: 'POST',
-      body: JSON.stringify({ fileName: file.name, dataUrl }),
-    });
-    return result.url;
-  } catch {
-    return dataUrl;
-  }
+  const result = await apiRequest<{ url: string }>('/api/upload', {
+    method: 'POST',
+    body: JSON.stringify({ fileName: file.name, dataUrl }),
+  });
+  return result.url;
+}
+
+async function uploadImages(files: FileList | null) {
+  if (!files?.length) return [];
+  return Promise.all(Array.from(files).map(uploadImage));
 }
 
 function fileToDataUrl(file: File) {
@@ -468,11 +476,25 @@ function SectionTitle({ eyebrow, title }: { eyebrow: string; title: string }) {
 }
 
 function ProductCard({ product, compact = false }: { product: Product; compact?: boolean }) {
-  const image = product.images?.[0] || product.image;
+  const images = product.images?.length ? product.images : [product.image].filter(Boolean);
+  const image = images[0];
 
   return (
     <article className={`${compact ? 'w-64 shrink-0' : ''} overflow-hidden rounded-lg bg-white shadow-soft premium-border`}>
-      <img className="h-44 w-full object-cover" src={image} alt={product.name} />
+      <div className="bg-cream">
+        {image ? (
+          <img className="h-44 w-full object-cover" src={image} alt={product.name} />
+        ) : (
+          <div className="grid h-44 w-full place-items-center bg-berry-50 text-sm font-bold text-berry-700">Фото скоро будет</div>
+        )}
+        {images.length > 1 && (
+          <div className="grid grid-cols-4 gap-1 p-2">
+            {images.slice(0, 4).map((item) => (
+              <img key={item} className="h-12 w-full rounded-md object-cover" src={item} alt={product.name} />
+            ))}
+          </div>
+        )}
+      </div>
       <div className="space-y-3 p-4">
         <div className="grid gap-2 min-[380px]:flex min-[380px]:items-start min-[380px]:justify-between min-[380px]:gap-3">
           <h3 className="min-w-0 text-lg font-extrabold leading-tight">{product.name}</h3>
@@ -646,12 +668,26 @@ function Gallery({ items }: { items: GalleryItem[] }) {
       <h1 className="mb-5 font-display text-4xl font-bold">Галерея подарков</h1>
       {items.length ? (
         <div className="masonry">
-          {items.map((item) => (
-            <figure key={item.id} className="mb-3 break-inside-avoid overflow-hidden rounded-lg bg-white shadow-soft premium-border">
-              <img className={`${heightClass[item.height]} w-full object-cover`} src={item.image} alt={item.title} />
-              <figcaption className="px-3 py-3 text-sm font-bold">{item.title}</figcaption>
-            </figure>
-          ))}
+          {items.map((item) => {
+            const images = item.images?.length ? item.images : [item.image].filter(Boolean);
+            return (
+              <figure key={item.id} className="mb-3 break-inside-avoid overflow-hidden rounded-lg bg-white shadow-soft premium-border">
+                {images[0] ? (
+                  <img className={`${heightClass[item.height]} w-full object-cover`} src={images[0]} alt={item.title} />
+                ) : (
+                  <div className={`${heightClass[item.height]} grid w-full place-items-center bg-berry-50 text-sm font-bold text-berry-700`}>Фото скоро будет</div>
+                )}
+                {images.length > 1 && (
+                  <div className="grid grid-cols-3 gap-1 px-2 pt-2">
+                    {images.slice(1, 4).map((image) => (
+                      <img key={image} className="h-16 w-full rounded-md object-cover" src={image} alt={item.title} />
+                    ))}
+                  </div>
+                )}
+                <figcaption className="px-3 py-3 text-sm font-bold">{item.title}</figcaption>
+              </figure>
+            );
+          })}
         </div>
       ) : (
         <div className="rounded-lg bg-white p-6 text-center text-lg font-extrabold text-chocolate-600 shadow-soft premium-border">
@@ -683,8 +719,10 @@ function Reviews({ reviews }: { reviews: Review[] }) {
 }
 
 function ReviewCard({ review }: { review: Review }) {
+  const image = review.images?.[0] || review.image;
   return (
     <article className="rounded-lg bg-white p-4 shadow-soft premium-border">
+      {image && <img className="mb-3 h-36 w-full rounded-md object-cover" src={image} alt={review.name} />}
       <div className="mb-3 flex gap-1 text-berry-600">
         {Array.from({ length: review.rating }).map((_, index) => (
           <Star key={index} size={17} fill="currentColor" />
@@ -841,31 +879,53 @@ function Admin({
 
   const submitReview = (event: FormEvent) => {
     event.preventDefault();
-    const nextReview = { ...reviewDraft, id: reviewDraft.id || `review-${Date.now()}` };
-    void onReviews([nextReview, ...reviews]);
+    const images = reviewDraft.images?.length ? reviewDraft.images : [reviewDraft.image].filter((item): item is string => Boolean(item));
+    const nextReview = { ...reviewDraft, id: reviewDraft.id || `review-${Date.now()}`, image: images[0] || reviewDraft.image, images };
+    const exists = reviews.some((review) => review.id === nextReview.id);
+    void onReviews(exists ? reviews.map((review) => (review.id === nextReview.id ? nextReview : review)) : [nextReview, ...reviews]);
     setReviewDraft(emptyReview);
   };
 
   const submitGalleryItem = (event: FormEvent) => {
     event.preventDefault();
-    const nextItem = { ...galleryDraft, id: galleryDraft.id || `gallery-${Date.now()}` };
+    const images = galleryDraft.images?.length ? galleryDraft.images : [galleryDraft.image].filter(Boolean);
+    const nextItem = { ...galleryDraft, id: galleryDraft.id || `gallery-${Date.now()}`, image: images[0] || galleryDraft.image, images };
     const exists = galleryItems.some((item) => item.id === nextItem.id);
     void onGalleryItems(exists ? galleryItems.map((item) => (item.id === nextItem.id ? nextItem : item)) : [nextItem, ...galleryItems]);
     setGalleryDraft(emptyGalleryItem);
   };
 
   const loadPhoto = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    void uploadImage(file).then((image) => {
-      setProductDraft((draft) => ({ ...draft, image, images: [image, ...(draft.images || []).filter((item) => item !== image)] }));
-    });
+    void uploadImages(event.target.files)
+      .then((images) => {
+        setProductDraft((draft) => {
+          const merged = [...images, ...(draft.images || [])].filter((item, index, array) => item && array.indexOf(item) === index);
+          return { ...draft, image: merged[0] || draft.image, images: merged };
+        });
+      })
+      .catch(() => alert('Не удалось загрузить фото. Проверьте настройки Cloudinary.'));
   };
 
   const loadGalleryPhoto = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    void uploadImage(file).then((image) => setGalleryDraft((draft) => ({ ...draft, image })));
+    void uploadImages(event.target.files)
+      .then((images) => {
+        setGalleryDraft((draft) => {
+          const merged = [...images, ...(draft.images || [])].filter((item, index, array) => item && array.indexOf(item) === index);
+          return { ...draft, image: merged[0] || draft.image, images: merged };
+        });
+      })
+      .catch(() => alert('Не удалось загрузить фото. Проверьте настройки Cloudinary.'));
+  };
+
+  const loadReviewPhoto = (event: ChangeEvent<HTMLInputElement>) => {
+    void uploadImages(event.target.files)
+      .then((images) => {
+        setReviewDraft((draft) => {
+          const merged = [...images, ...(draft.images || [])].filter((item, index, array) => item && array.indexOf(item) === index);
+          return { ...draft, image: merged[0] || draft.image, images: merged };
+        });
+      })
+      .catch(() => alert('Не удалось загрузить фото. Проверьте настройки Cloudinary.'));
   };
 
   return (
@@ -894,11 +954,13 @@ function Admin({
         <AdminInput label="Описание" value={productDraft.description} onChange={(value) => updateDraft('description', value)} />
         <AdminInput
           label="Фото URL"
+          required={false}
           value={productDraft.image}
           onChange={(value) => setProductDraft((draft) => ({ ...draft, image: value, images: value ? [value, ...(draft.images || []).filter((item) => item !== value)] : draft.images }))}
         />
         <AdminInput
           label="Дополнительные фото URL через запятую"
+          required={false}
           value={(productDraft.images || []).join(', ')}
           onChange={(value) => {
             const images = value.split(',').map((item) => item.trim()).filter(Boolean);
@@ -907,7 +969,7 @@ function Admin({
         />
         <label className="rounded-lg border border-dashed border-berry-700/30 bg-berry-50 p-3 text-sm font-bold text-berry-800">
           Загрузить фотографию
-          <input className="mt-2 block w-full text-xs" type="file" accept="image/*" onChange={loadPhoto} />
+          <input className="mt-2 block w-full text-xs" type="file" accept="image/*" multiple onChange={loadPhoto} />
         </label>
         <label className="flex items-center gap-3 text-sm font-bold">
           <input type="checkbox" checked={productDraft.popular} onChange={(event) => updateDraft('popular', event.target.checked)} />
@@ -939,10 +1001,24 @@ function Admin({
       <form className="mt-6 grid gap-3 rounded-lg bg-white p-4 shadow-soft premium-border" onSubmit={submitGalleryItem}>
         <h2 className="flex items-center gap-2 text-lg font-extrabold"><ImageIcon size={18} /> Фото в “Наши работы”</h2>
         <AdminInput label="Название" value={galleryDraft.title} onChange={(value) => setGalleryDraft((draft) => ({ ...draft, title: value }))} />
-        <AdminInput label="Фото URL" value={galleryDraft.image} onChange={(value) => setGalleryDraft((draft) => ({ ...draft, image: value }))} />
+        <AdminInput
+          label="Фото URL"
+          required={false}
+          value={galleryDraft.image}
+          onChange={(value) => setGalleryDraft((draft) => ({ ...draft, image: value, images: value ? [value, ...(draft.images || []).filter((item) => item !== value)] : draft.images }))}
+        />
+        <AdminInput
+          label="Дополнительные фото URL через запятую"
+          required={false}
+          value={(galleryDraft.images || []).join(', ')}
+          onChange={(value) => {
+            const images = value.split(',').map((item) => item.trim()).filter(Boolean);
+            setGalleryDraft((draft) => ({ ...draft, images, image: images[0] || draft.image }));
+          }}
+        />
         <label className="rounded-lg border border-dashed border-berry-700/30 bg-berry-50 p-3 text-sm font-bold text-berry-800">
           Загрузить фото для галереи
-          <input className="mt-2 block w-full text-xs" type="file" accept="image/*" onChange={loadGalleryPhoto} />
+          <input className="mt-2 block w-full text-xs" type="file" accept="image/*" multiple onChange={loadGalleryPhoto} />
         </label>
         <select
           className="h-12 rounded-lg border border-berry-900/10 bg-cream px-3 font-semibold"
@@ -959,7 +1035,7 @@ function Admin({
       <div className="mt-5 grid gap-3">
         {galleryItems.map((item) => (
           <div key={item.id} className="flex items-center gap-3 rounded-lg bg-white p-3 shadow-soft premium-border">
-            <img className="h-16 w-16 rounded-md object-cover" src={item.image} alt={item.title} />
+            <img className="h-16 w-16 rounded-md object-cover" src={item.images?.[0] || item.image} alt={item.title} />
             <div className="min-w-0 flex-1">
               <b className="block truncate">{item.title}</b>
               <span className="text-sm font-bold text-chocolate-500">Наши работы</span>
@@ -979,7 +1055,17 @@ function Admin({
         <AdminInput label="Имя" value={reviewDraft.name} onChange={(value) => setReviewDraft((draft) => ({ ...draft, name: value }))} />
         <AdminInput label="Контекст" value={reviewDraft.role} onChange={(value) => setReviewDraft((draft) => ({ ...draft, role: value }))} />
         <AdminInput label="Текст" value={reviewDraft.text} onChange={(value) => setReviewDraft((draft) => ({ ...draft, text: value }))} />
-        <button className="h-12 rounded-full bg-chocolate-900 font-extrabold text-white">Добавить отзыв</button>
+        <AdminInput
+          label="Фото к отзыву URL"
+          required={false}
+          value={reviewDraft.image || ''}
+          onChange={(value) => setReviewDraft((draft) => ({ ...draft, image: value, images: value ? [value, ...(draft.images || []).filter((item) => item !== value)] : draft.images }))}
+        />
+        <label className="rounded-lg border border-dashed border-berry-700/30 bg-berry-50 p-3 text-sm font-bold text-berry-800">
+          Загрузить фото к отзыву
+          <input className="mt-2 block w-full text-xs" type="file" accept="image/*" multiple onChange={loadReviewPhoto} />
+        </label>
+        <button className="h-12 rounded-full bg-chocolate-900 font-extrabold text-white">Сохранить отзыв</button>
       </form>
 
       <div className="mt-5 grid gap-3">
@@ -989,6 +1075,9 @@ function Admin({
               <b className="block truncate">{review.name}</b>
               <span className="line-clamp-1 text-sm text-chocolate-500">{review.text}</span>
             </div>
+            <button className="grid h-10 w-10 place-items-center rounded-full bg-berry-50 text-berry-700" onClick={() => setReviewDraft(review)} aria-label="Редактировать отзыв">
+              <Pencil size={17} />
+            </button>
             <button className="grid h-10 w-10 place-items-center rounded-full bg-chocolate-900 text-white" onClick={() => void onReviews(reviews.filter((item) => item.id !== review.id))} aria-label="Удалить отзыв">
               <Trash2 size={17} />
             </button>
@@ -1004,17 +1093,19 @@ function AdminInput({
   value,
   onChange,
   type = 'text',
+  required = true,
 }: {
   label: string;
   value: string;
   onChange: (value: string) => void;
   type?: string;
+  required?: boolean;
 }) {
   return (
     <label className="grid gap-1 text-sm font-bold text-chocolate-600">
       {label}
       <input
-        required
+        required={required}
         className="h-12 rounded-lg border border-berry-900/10 bg-cream px-3 font-semibold text-chocolate-900 outline-none focus:border-berry-700"
         type={type}
         value={value}
