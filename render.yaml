@@ -17,6 +17,10 @@ services:
         sync: false
       - key: CLOUDINARY_FOLDER
         value: chocoberry
+      - key: CLOUDINARY_CLOUD_NAME
+        value: dnpam2shj
+      - key: CLOUDINARY_UPLOAD_PRESET
+        value: chocoberry_unsigned
       - key: GITHUB_TOKEN
         sync: false
       - key: GITHUB_REPO

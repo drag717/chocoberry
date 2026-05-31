@@ -13,10 +13,11 @@ const adminPasswords = new Set([adminPassword, 'choco9380'].filter(Boolean));
 const tokens = new Set();
 
 const cloudinary = {
-  cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+  cloudName: process.env.CLOUDINARY_CLOUD_NAME || 'dnpam2shj',
   apiKey: process.env.CLOUDINARY_API_KEY,
   apiSecret: process.env.CLOUDINARY_API_SECRET,
   folder: process.env.CLOUDINARY_FOLDER || 'chocoberry',
+  uploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET || 'chocoberry_unsigned',
 };
 
 const githubStore = {
@@ -172,8 +173,12 @@ function publicContacts(value) {
   return safe;
 }
 
-function cloudinaryReady() {
+function cloudinarySignedReady() {
   return Boolean(cloudinary.cloudName && cloudinary.apiKey && cloudinary.apiSecret);
+}
+
+function cloudinaryUnsignedReady() {
+  return Boolean(cloudinary.cloudName && cloudinary.uploadPreset);
 }
 
 function githubReady() {
@@ -237,18 +242,22 @@ function cloudinarySignature(params) {
 }
 
 async function uploadToCloudinary(dataUrl) {
-  if (!cloudinaryReady()) {
-    throw new Error('Cloudinary env vars are not configured');
+  if (!cloudinarySignedReady() && !cloudinaryUnsignedReady()) {
+    throw new Error('Cloudinary upload settings are not configured');
   }
 
-  const timestamp = Math.round(Date.now() / 1000);
-  const params = { folder: cloudinary.folder, timestamp };
   const form = new FormData();
   form.set('file', dataUrl);
-  form.set('api_key', cloudinary.apiKey);
-  form.set('timestamp', String(timestamp));
-  form.set('folder', cloudinary.folder);
-  form.set('signature', cloudinarySignature(params));
+  if (cloudinarySignedReady()) {
+    const timestamp = Math.round(Date.now() / 1000);
+    const params = { folder: cloudinary.folder, timestamp };
+    form.set('api_key', cloudinary.apiKey);
+    form.set('timestamp', String(timestamp));
+    form.set('folder', cloudinary.folder);
+    form.set('signature', cloudinarySignature(params));
+  } else {
+    form.set('upload_preset', cloudinary.uploadPreset);
+  }
 
   const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudinary.cloudName}/image/upload`, {
     method: 'POST',
