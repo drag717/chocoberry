@@ -15,6 +15,5 @@ COPY --from=build /app/package*.json ./
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/server ./server
 COPY --from=build /app/src/data ./src/data
-COPY --from=build /app/public ./public
 EXPOSE 8080
 CMD ["node", "server/server.mjs"]
